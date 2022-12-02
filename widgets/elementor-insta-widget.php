@@ -759,6 +759,7 @@ class Widget_Insta_Carousel extends \Elementor\Widget_Base {
 			'carousel-wrapper' => [
 				'class' => 'elementor-image-carousel-wrapper swiper-container',
 				'dir' => $settings['direction'],
+				'style' => 'border-radius: inherit',
 			],
 		] );
 
