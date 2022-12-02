@@ -12,6 +12,12 @@ use \Elementor\Icons_Manager;
   */
 class Widget_Insta_Carousel extends \Elementor\Widget_Base {
 
+	public function __construct($data = [], $args = null) {
+		parent::__construct($data, $args);
+
+		wp_register_script( 'insta-carousel', plugins_url( ) . '/rohs-insta-widget/js/insta-carousel.js', [ 'elementor-frontend' ], '1.0.0', true );
+ 	}
+
 	/**
 	 * Get widget name.
 	 *
@@ -20,8 +26,12 @@ class Widget_Insta_Carousel extends \Elementor\Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'image-carousel';
+		return 'insta-carousel';
 	}
+
+	public function get_script_depends() {
+		return [ 'insta-carousel' ];
+  }
 
 	/**
 	 * Get widget title.

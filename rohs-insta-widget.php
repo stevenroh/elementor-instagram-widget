@@ -1,7 +1,7 @@
 <?php
 /*
-  Plugin Name: Instagram Widget
-  Plugin URI: https://stevenroh.ch
+  Plugin Name: Elementor Instagram Widget
+  Plugin URI: https://github.com/stevenroh/elementor-instagram-widget
   Description: Show your instagram feed
   Version: 1.0
   Author: Steven Roh
@@ -106,6 +106,7 @@ final class Elementor_InstaWidget_Extension {
 	 */
 	public function init() {
 
+
 		// Check if Elementor installed and activated
 		if ( ! did_action( 'elementor/loaded' ) ) {
 			add_action( 'admin_notices', [ $this, 'admin_notice_missing_main_plugin' ] );
@@ -125,7 +126,7 @@ final class Elementor_InstaWidget_Extension {
 		}
 
 		// Add Plugin actions
-		add_action( 'elementor/widgets/widgets_registered', [ $this, 'init_widgets' ] );
+		add_action( 'elementor/widgets/register', [ $this, 'init_widgets' ] );
 	}
 
 	/**
@@ -143,7 +144,7 @@ final class Elementor_InstaWidget_Extension {
 		$message = sprintf(
 		/* translators: 1: Plugin name 2: Elementor */
 			esc_html__( '"%1$s" requires "%2$s" to be installed and activated.', TEXT_DOMAIN ),
-			'<strong>' . esc_html__( 'Elementor InstaWidget Extension', TEXT_DOMAIN ) . '</strong>',
+			'<strong>' . esc_html__( 'Elementor Insta Widget Extension', TEXT_DOMAIN ) . '</strong>',
 			'<strong>' . esc_html__( 'Elementor', TEXT_DOMAIN ) . '</strong>'
 		);
 
@@ -166,7 +167,7 @@ final class Elementor_InstaWidget_Extension {
 		$message = sprintf(
 		/* translators: 1: Plugin name 2: Elementor 3: Required Elementor version */
 			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', TEXT_DOMAIN ),
-			'<strong>' . esc_html__( 'Elementor InstaWidget Extension', TEXT_DOMAIN ) . '</strong>',
+			'<strong>' . esc_html__( 'Elementor Insta Widget Extension', TEXT_DOMAIN ) . '</strong>',
 			'<strong>' . esc_html__( 'Elementor', TEXT_DOMAIN ) . '</strong>',
 			self::MINIMUM_ELEMENTOR_VERSION
 		);
@@ -190,7 +191,7 @@ final class Elementor_InstaWidget_Extension {
 		$message = sprintf(
 		/* translators: 1: Plugin name 2: PHP 3: Required PHP version */
 			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', TEXT_DOMAIN ),
-			'<strong>' . esc_html__( 'Elementor InstaWidget Extension', TEXT_DOMAIN ) . '</strong>',
+			'<strong>' . esc_html__( 'Elementor Insta Widget Extension', TEXT_DOMAIN ) . '</strong>',
 			'<strong>' . esc_html__( 'PHP', TEXT_DOMAIN ) . '</strong>',
 			self::MINIMUM_PHP_VERSION
 		);
@@ -207,12 +208,13 @@ final class Elementor_InstaWidget_Extension {
 	 *
 	 * @access public
 	 */
-	public function init_widgets() {
+	public function init_widgets( $widgets_manager  ) {
+
 		// Include Widget files
 		require_once( __DIR__ . '/widgets/elementor-insta-widget.php' );
 
 		// Register widget
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \Widget_Insta_Carousel() );
+		$widgets_manager->register( new \Widget_Insta_Carousel() );
 
 	}
 
